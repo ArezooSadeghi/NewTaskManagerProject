@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.newtaskmanager.R;
 import com.example.newtaskmanager.model.Task;
 import com.example.newtaskmanager.repository.IRepository;
+import com.example.newtaskmanager.repository.TaskDBRepository;
 import com.example.newtaskmanager.repository.TaskRepository;
 
 public class AddNewTaskDialogFragment extends DialogFragment {
@@ -62,7 +63,7 @@ public class AddNewTaskDialogFragment extends DialogFragment {
                 Task task = new Task();
                 task.setTitle(mEditTextTitle.getText().toString());
                 task.setDescription(mEditTextDescription.getText().toString());
-                mRepository = TaskRepository.getInstance();
+                mRepository = TaskDBRepository.getInstance(getActivity());
                 mRepository.insert(task);
                 dismiss();
             }

@@ -14,6 +14,7 @@ import com.example.newtaskmanager.R;
 import com.example.newtaskmanager.controller.fragment.adapter.TaskAdapter;
 import com.example.newtaskmanager.model.Task;
 import com.example.newtaskmanager.repository.IRepository;
+import com.example.newtaskmanager.repository.TaskDBRepository;
 import com.example.newtaskmanager.repository.TaskRepository;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class TodoTaskFragment extends Fragment {
 
     private void initViews() {
         mRecyclerViewTodoTask.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRepository = TaskRepository.getInstance();
+        mRepository = TaskDBRepository.getInstance(getActivity());
         List<Task> tasks = mRepository.getTasks();
         if (!(tasks.size() == 0)) {
             if (mTaskAdapter == null) {
