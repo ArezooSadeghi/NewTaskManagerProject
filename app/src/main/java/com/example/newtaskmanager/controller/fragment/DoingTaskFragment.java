@@ -22,6 +22,7 @@ public class DoingTaskFragment extends Fragment {
     private RecyclerView mRecyclerViewDoingTask;
     private LinearLayout mLayoutShowEmptyRecyclerview;
     private IRepository mRepository;
+    private TaskAdapter mTaskAdapter;
 
     public DoingTaskFragment() {
     }
@@ -54,11 +55,17 @@ public class DoingTaskFragment extends Fragment {
     }
 
     private void initViews() {
-        mRecyclerViewDoingTask.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        mRecyclerViewDoingTask.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRepository = TaskRepository.getInstance();
         List<Task> tasks = mRepository.getTasks();
         if (!(tasks.size() == 0)) {
-            mRecyclerViewDoingTask.setAdapter(new TaskAdapter(tasks, getActivity().getApplicationContext()));
+            if (mTaskAdapter == null) {
+                mTaskAdapter = new TaskAdapter(tasks, getActivity());
+                mRecyclerViewDoingTask.setAdapter(mTaskAdapter);
+            } else {
+                mTaskAdapter.setTasks(tasks);
+                mTaskAdapter.notifyDataSetChanged();
+            }
         } else {
             mLayoutShowEmptyRecyclerview.setVisibility(View.VISIBLE);
         }
