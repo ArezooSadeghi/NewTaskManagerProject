@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class TodoTaskFragment extends Fragment {
     private RecyclerView mRecyclerViewTodoTask;
+    private LinearLayout mLayoutShowEmptyRecyclerview;
     private IRepository mRepository;
 
     public TodoTaskFragment() {
@@ -48,12 +50,17 @@ public class TodoTaskFragment extends Fragment {
 
     private void findViews(View view) {
         mRecyclerViewTodoTask = view.findViewById(R.id.todotask_recyclerview);
+        mLayoutShowEmptyRecyclerview = view.findViewById(R.id.layout_empty_recyclerview);
     }
 
     private void initViews() {
         mRecyclerViewTodoTask.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         mRepository = TaskRepository.getInstance();
         List<Task> tasks = mRepository.getTasks();
-        mRecyclerViewTodoTask.setAdapter(new TaskAdapter(tasks, getActivity().getApplicationContext()));
+        if (!(tasks.size() == 0)) {
+            mRecyclerViewTodoTask.setAdapter(new TaskAdapter(tasks, getActivity().getApplicationContext()));
+        } else {
+            mLayoutShowEmptyRecyclerview.setVisibility(View.VISIBLE);
+        }
     }
 }

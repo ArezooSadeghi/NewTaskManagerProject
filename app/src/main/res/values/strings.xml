@@ -5,4 +5,5 @@
     <string name="done">Done</string>
     <string name="doing">Doing</string>
     <string name="todo">Todo</string>
+    <string name="showtext_empty_recyclerview">There is nothing to do</string>
 </resources>
